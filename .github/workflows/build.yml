@@ -1,0 +1,35 @@
+name: Compilar para Windows
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Compilar aplicación (React y Electron)
+        run: |
+          npm run build
+          npx electron-builder --win
+
+      - name: Subir instaladores de Windows (.exe)
+        uses: actions/upload-artifact@v4
+        with:
+          name: SocioGrafo-Windows-Ejecutables
+          path: release/*.exe

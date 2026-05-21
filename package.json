@@ -19,6 +19,12 @@
     "linux": {
       "target": "AppImage",
       "category": "Education"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
     }
   },
   "dependencies": {
